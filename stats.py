@@ -31,7 +31,7 @@ def main():
     merges = dict()
     opens = dict()
     for pull in pulls:
-        approval_by = None
+        approved_by = []
         if not in_timeframe(pull.updated_at, now):
             break
         print(pull)
@@ -51,17 +51,18 @@ def main():
             elif state == "APPROVED":
                 approvals[user.login] = approvals.get(user.login, 0) + 1
                 print(f"{user.login} approves")
-                approval_by = user
+                approved_by += [user.login]
             elif state == "COMMENTED":
                 pass
         if pull.is_merged():
             if in_timeframe(pull.merged_at, now):
                 user = pull.merged_by
-                if approval_by is None:
+                if len(approved_by) == 0:
                     print(f"{user.login} approves")
                     approvals[user.login] = approvals.get(user.login, 0) + 1
-                print(f"{user.login} merges")
-                merges[user.login] = merges.get(user.login, 0) + 1
+                if user.login not in approved_by:
+                    print(f"{user.login} merges")
+                    merges[user.login] = merges.get(user.login, 0) + 1
 
     print("\n### Approvals\n")
     print_leaderboard(approvals)
