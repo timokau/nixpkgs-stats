@@ -10,9 +10,14 @@ def in_timeframe(date, now):
     return now - date < datetime.timedelta(days=7)
 
 def print_leaderboard(stats):
-    s_stats = sorted(stats.items(), key=operator.itemgetter(1), reverse=True)
-    for (rank, (login, number)) in enumerate(s_stats, start=1):
-        print(f'{rank}. {login} ({number})')
+    inverted = dict()
+    for (login, number) in stats.items():
+        inverted[number] = inverted.get(number, []) + [login]
+    sorted_stats = sorted(inverted.items(), key=operator.itemgetter(0), reverse=True)
+
+    for (rank, (number, logins)) in enumerate(sorted_stats, start=1):
+        login_list = ', '.join(logins)
+        print(f'{rank}. {login_list} ({number})')
 
 def main():
     # https://github.com/settings/tokens
