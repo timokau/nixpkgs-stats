@@ -69,6 +69,9 @@ def main():
                     print(f"{user.login} merges")
                     merges[user.login] = merges.get(user.login, 0) + 1
 
+    # Ignore bot PRs
+    opens.pop('r-ryantm', None)
+
     print("\n### Positive reviews\n")
     print_leaderboard(approvals)
     print("\n### Requests for changes\n")
