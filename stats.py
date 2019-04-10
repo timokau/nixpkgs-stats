@@ -69,11 +69,11 @@ def main():
                     print(f"{user.login} merges")
                     merges[user.login] = merges.get(user.login, 0) + 1
 
-    print("\n### Approvals\n")
+    print("\n### Positive reviews\n")
     print_leaderboard(approvals)
     print("\n### Requests for changes\n")
     print_leaderboard(changes)
-    print("\n### Merges\n")
+    print("\n### Merges of already reviewed PRs\n")
     print_leaderboard(merges)
     print("\n### New PRs\n")
     print_leaderboard(opens)
