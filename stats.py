@@ -63,10 +63,10 @@ def main():
             if in_timeframe(pull.merged_at, now):
                 user = pull.merged_by
                 if len(approved_by) == 0:
-                    print(f"{user.login} approves")
+                    print(f"{user.login} implicitly approves by merge")
                     approvals[user.login] = approvals.get(user.login, 0) + 1
-                if user.login not in approved_by:
-                    print(f"{user.login} merges")
+                elif user.login not in approved_by:
+                    print(f"{user.login} merges with existing review")
                     merges[user.login] = merges.get(user.login, 0) + 1
 
     # Ignore bot PRs
